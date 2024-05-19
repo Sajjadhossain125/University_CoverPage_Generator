@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header_container_Center">
+            <img src="/image/green.png" id="logo" alt="University Logo" class="logo">
+            <h1>Green University of Bangladesh</h1>
+            <h2>Department of Computer Science and Engineering (CSE)</h2>
+            <h3>Faculty of Sciences and Engineering</h3>
+        </div>
+        
+        <form id="pdf-form">
+            <label for="semester">Semester (Spring/Summer):</label>
+            <input type="text" id="semester" name="semester" required><br>
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" required><br>
+            <label for="section">Section:</label>
+            <input type="text" id="section" name="section" required><br>
+            <label for="topic" id="topicLabel">Topic:</label>
+            <input type="text" id="topic" name="topic" placeholder="Enter Topic" required><br>
+            <label for="courseTitle">Course Title:</label>
+            <input type="text" id="courseTitle" name="courseTitle" required><br>
+            <label for="courseCode">Course Code:</label>
+            <input type="text" id="courseCode" name="courseCode" required><br>
+            <label for="assignmentType">Cover Page Type:</label>
+            <input type="radio" id="assignment" name="assignmentType" value="Assignment" checked onclick="toggleLabReportNo()"> Assignment
+            <input type="radio" id="labReport" name="assignmentType" value="Lab Report" onclick="toggleLabReportNo()"> Lab Report<br>
+            <div id="labReportNoContainer" style="display: none;">
+                <label for="labReportNo">Lab Report No:</label>
+                <input type="text" id="labReportNo" name="labReportNo"><br>
+            </div>
+            <div id="labDateContainer" style="display: none;">
+                <label for="labDate">Lab Date:</label>
+                <input type="date" id="labDate" name="labDate"><br>
+            </div>
+           
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required><br>
+            <label for="date">Submission Date:</label>
+            <input type="date" id="date" name="date" required><br>
+            <label for="teacher">Course Teacher's Name:</label>
+            <input type="text" id="teacher" name="teacher" required><br>
+            <button type="button" onclick="generatePDF()">Generate PDF</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
