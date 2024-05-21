@@ -14,23 +14,33 @@
             <h2>Department of Computer Science and Engineering (CSE)</h2>
             <h3>Faculty of Sciences and Engineering</h3>
         </div>
-        
+
+        <div class="toggle-container">
+            <input type="radio" id="assignment" name="toggle" value="assignment" checked>
+            <label for="assignment">Assignment</label>
+            <input type="radio" id="labReport" name="toggle" value="labReport">
+            <label for="labReport">Lab Report</label>
+            <div class="slider"></div>
+        </div>
+
         <form id="pdf-form">
             <label for="semester">Semester (Spring/Summer):</label>
-            <input type="text" id="semester" name="semester" required><br>
+            <input list="semesters" id="semester" name="semester" required>
+            <datalist id="semesters">
+                <option value="Spring"></option>
+                <option value="Summer"></option>
+            </datalist><br>
+
             <label for="year">Year:</label>
             <input type="number" id="year" name="year" required><br>
             <label for="section">Section:</label>
-            <input type="text" id="section" name="section" required><br>
+            <input type="text" id="section" name="section" placeholder="Enter your Section" required><br>
             <label for="topic" id="topicLabel">Topic:</label>
             <input type="text" id="topic" name="topic" placeholder="Enter Topic" required><br>
             <label for="courseTitle">Course Title:</label>
-            <input type="text" id="courseTitle" name="courseTitle" required><br>
+            <input type="text" placeholder="Enter your Course Titls" id="courseTitle" name="courseTitle" required><br>
             <label for="courseCode">Course Code:</label>
-            <input type="text" id="courseCode" name="courseCode" required><br>
-            <label for="assignmentType">Cover Page Type:</label>
-            <input type="radio" id="assignment" name="assignmentType" value="Assignment" checked onclick="toggleLabReportNo()"> Assignment
-            <input type="radio" id="labReport" name="assignmentType" value="Lab Report" onclick="toggleLabReportNo()"> Lab Report<br>
+            <input type="text" placeholder="Enter course code" id="courseCode" name="courseCode" required><br>
             <div id="labReportNoContainer" style="display: none;">
                 <label for="labReportNo">Lab Report No:</label>
                 <input type="text" id="labReportNo" name="labReportNo"><br>
@@ -39,16 +49,18 @@
                 <label for="labDate">Lab Date:</label>
                 <input type="date" id="labDate" name="labDate"><br>
             </div>
-           
             <label for="name">Student Name:</label>
-            <input type="text" id="name" name="name" required><br>
+            <input type="text" placeholder="Enter your name" id="name" name="name" required><br>
             <label for="id">Student ID:</label>
-            <input type="text" id="id" name="id" required><br>
+            <input type="text" placeholder="Enter your Student ID" id="id" name="id" required><br>
             <label for="date">Submission Date:</label>
             <input type="date" id="date" name="date" required><br>
             <label for="teacher">Course Teacher's Name:</label>
-            <input type="text" id="teacher" name="teacher" required><br>
-            <button type="button" onclick="generatePDF()">Generate PDF</button>
+            <input type="text" placeholder="Enter your course instructor name" id="teacher" name="teacher" required><br>
+            <div class="button-container">
+                <button type="button" onclick="generatePDF()">Generate PDF</button>
+                <button type="button" class="button_right button_color" onclick="resetForm()">Reset</button>
+            </div>
         </form>
     </div>
 

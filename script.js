@@ -5,6 +5,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const yearInput = document.getElementById('year');
     const currentYear = new Date().getFullYear();
     yearInput.value = currentYear;
+
+    // Initialize the toggle state
+    const assignmentRadio = document.getElementById('assignment');
+    assignmentRadio.checked = true;
+    toggleLabReportNo();
+
+    // Add event listeners to the toggle buttons
+    const toggleButtons = document.querySelectorAll('.toggle-container input[type="radio"]');
+    toggleButtons.forEach(button => {
+        button.addEventListener('change', toggleLabReportNo);
+    });
 });
 
 function toggleLabReportNo() {
@@ -12,12 +23,17 @@ function toggleLabReportNo() {
     const labDateContainer = document.getElementById('labDateContainer');
     const topicLabel = document.getElementById('topicLabel');
     const topicInput = document.getElementById('topic');
-    const labReport = document.getElementById('labReport').checked;
+    const assignmentChecked = document.getElementById('assignment').checked;
 
-    labReportNoContainer.style.display = labReport ? 'block' : 'none';
-    labDateContainer.style.display = labReport ? 'block' : 'none';
-    topicLabel.textContent = labReport ? 'Lab Experiment Name:' : 'Topic:';
-    topicInput.placeholder = labReport ? 'Enter Lab Experiment Name' : 'Enter Topic';
+    labReportNoContainer.style.display = assignmentChecked ? 'none' : 'block';
+    labDateContainer.style.display = assignmentChecked ? 'none' : 'block';
+    topicLabel.textContent = assignmentChecked ? 'Topic:' : 'Lab Experiment Name:';
+    topicInput.placeholder = assignmentChecked ? 'Enter Topic' : 'Enter Lab Experiment Name';
+}
+
+function resetForm() {
+    document.getElementById('pdf-form').reset();
+    toggleLabReportNo(); // Ensure the correct fields are displayed based on the default toggle state
 }
 
 function generatePDF() {
@@ -31,7 +47,7 @@ function generatePDF() {
     const topic = document.getElementById('topic').value;
     const courseTitle = document.getElementById('courseTitle').value;
     const courseCode = document.getElementById('courseCode').value;
-    const assignmentType = document.querySelector('input[name="assignmentType"]:checked').value;
+    const assignmentType = document.getElementById('assignment').checked ? 'Assignment' : 'Lab Report';
     const labReportNo = document.getElementById('labReportNo').value;
     const name = document.getElementById('name').value;
     const id = document.getElementById('id').value;
@@ -90,7 +106,7 @@ function generatePDF() {
         theme: 'grid',
         tableWidth: 'wrap',  // Adjust the table width to content
         styles: { halign: 'center', cellPadding: 4, textColor: [0], fontSize: 12 }, // Set text color to black and larger font size
-        headStyles: { fillColor: [0], textColor: [255], fontStyle:'bold' }, // Set header background color and text color
+        headStyles: { fillColor: [0], textColor: [255], fontStyle: 'bold' }, // Set header background color and text color
         columnStyles: {
             0: { cellWidth: 70 },  // Set specific width for the first column
             1: { cellWidth: 70 }   // Set specific width for the second column
@@ -127,8 +143,15 @@ function generatePDF() {
         margin: { left: 20, right: 20 },
         tableWidth: pageWidth - 40
     });
+  
+    if (labDateContainer.style.display !== 'none') {
+        doc.save('Lab-Report.pdf');
+    } else {
+        doc.save('assignment.pdf');
+    }
+    
+ 
 
-    doc.save('assignment.pdf');
 }
 
 function getBase64Image(img) {
