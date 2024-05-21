@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentYear = new Date().getFullYear();
     yearInput.value = currentYear;
 
-    // Initialize the toggle state
+    // The toggle state
     const assignmentRadio = document.getElementById('assignment');
     assignmentRadio.checked = true;
     toggleLabReportNo();
@@ -33,7 +33,7 @@ function toggleLabReportNo() {
 
 function resetForm() {
     document.getElementById('pdf-form').reset();
-    toggleLabReportNo(); // Ensure the correct fields are displayed based on the default toggle state
+    toggleLabReportNo(); 
 }
 
 function generatePDF() {
@@ -58,24 +58,24 @@ function generatePDF() {
     // Convert the image to a base64 string
     const imgData = getBase64Image(logo);
 
-    // Calculate the center position for the image
-    const imgWidth = 40; // Increased width of the image in the PDF
-    const imgHeight = 40; // Increased height of the image in the PDF
-    const imgX = (pageWidth - imgWidth) / 2; // Center X position
+   
+    const imgWidth = 40; 
+    const imgHeight = 40; 
+    const imgX = (pageWidth - imgWidth) / 2; 
 
     doc.addImage(imgData, 'PNG', imgX, 10, imgWidth, imgHeight);
 
-    // Add text with specific font size and style
+  
     doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0); // Set text color to black
+    doc.setTextColor(0); 
     doc.text("Green University of Bangladesh", pageWidth / 2, 60, null, null, "center");
     doc.text("Department of Computer Science and Engineering (CSE)", pageWidth / 2, 70, null, null, "center");
 
-    // Reset font size and style for the remaining text
+ 
     doc.setFontSize(14);
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(0); // Set text color to black
+    doc.setTextColor(0); 
     doc.text("Faculty of Sciences and Engineering", pageWidth / 2, 80, null, null, "center");
     doc.text(`Semester: ${semester}, Year: ${year}, B.Sc. in CSE (Day)`, pageWidth / 2, 90, null, null, "center");
 
@@ -86,43 +86,42 @@ function generatePDF() {
 
     doc.text(`${assignmentType === 'Lab Report' ? 'Lab Experiment Name:' : 'Topic:'} ${topic}`, 20, 150);
 
-    // Bold and underline "Submitted Student Details" and center it
+    
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(14);
-    doc.setTextColor(0); // Set text color to black
+    doc.setTextColor(0); 
     doc.text("Submitted Student Details", pageWidth / 2, 160, null, null, "center");
     doc.setLineWidth(0.5);
-    doc.setDrawColor(0); // Set draw color to black
-    doc.line(60, 162, pageWidth - 60, 162); // Underline
+    doc.setDrawColor(0); 
+    doc.line(60, 162, pageWidth - 60, 162); 
 
-    // Reset font
+   
     doc.setFont('helvetica', 'normal');
 
-    // Create a table for Name and ID
     doc.autoTable({
         startY: 170,
         head: [['Name', 'ID']],
         body: [[name, id]],
         theme: 'grid',
-        tableWidth: 'wrap',  // Adjust the table width to content
-        styles: { halign: 'center', cellPadding: 4, textColor: [0], fontSize: 12 }, // Set text color to black and larger font size
-        headStyles: { fillColor: [0], textColor: [255], fontStyle: 'bold' }, // Set header background color and text color
+        tableWidth: 'wrap',  
+        styles: { halign: 'center', cellPadding: 4, textColor: [0], fontSize: 12 }, 
+        headStyles: { fillColor: [0], textColor: [255], fontStyle: 'bold' }, 
         columnStyles: {
-            0: { cellWidth: 70 },  // Set specific width for the first column
-            1: { cellWidth: 70 }   // Set specific width for the second column
+            0: { cellWidth: 70 }, 
+            1: { cellWidth: 70 }   
         },
-        margin: { left: 40, right: 40 }, // Center the table on the page
+        margin: { left: 40, right: 40 }, 
     });
 
     // Add submission details
     const finalY = doc.lastAutoTable.finalY;
     if (assignmentType === 'Lab Report') {
-        doc.text(`Lab Date: ${labDate}`, 20, finalY + 20);  // Add Lab Date before Submission Date
-        doc.text(`Submission Date: ${date}`, 20, finalY + 30);  // Adjust position for Submission Date
-        doc.text(`Course Teacher's Name: ${teacher}`, 20, finalY + 40);  // Adjust position for Teacher's Name
+        doc.text(`Lab Date: ${labDate}`, 20, finalY + 20);  
+        doc.text(`Submission Date: ${date}`, 20, finalY + 30);  
+        doc.text(`Course Teacher's Name: ${teacher}`, 20, finalY + 40);  
     } else {
-        doc.text(`Submission Date: ${date}`, 20, finalY + 20);  // Adjust position for Submission Date
-        doc.text(`Course Teacher's Name: ${teacher}`, 20, finalY + 30);  // Adjust position for Teacher's Name
+        doc.text(`Submission Date: ${date}`, 20, finalY + 20);  
+        doc.text(`Course Teacher's Name: ${teacher}`, 20, finalY + 30); 
     }
 
     // Add "For Teachers use only" section
@@ -138,8 +137,8 @@ function generatePDF() {
             ['Comments: ...............................................  Date: ..............................................']
         ],
         theme: 'grid',
-        styles: { halign: 'left', cellPadding: 4, textColor: [0], fontSize: 12 }, // Set text color to black and larger font size
-        headStyles: { fillColor: [0], textColor: [255], fontStyle: 'bold' }, // Set header background color, text color, and font style
+        styles: { halign: 'left', cellPadding: 4, textColor: [0], fontSize: 12 }, 
+        headStyles: { fillColor: [0], textColor: [255], fontStyle: 'bold' }, 
         margin: { left: 20, right: 20 },
         tableWidth: pageWidth - 40
     });
